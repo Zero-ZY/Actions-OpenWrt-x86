@@ -17,6 +17,8 @@ echo "src-git helloworld https://github.com/fw876/helloworld.git" >> "feeds.conf
 #
 # Add passwall
 echo "src-git passwall https://github.com/xiaorouji/openwrt-passwall.git;main" >> "feeds.conf.default"
+# Add shidahuilang
+echo "src-git shidahuilang https://github.com/shidahuilang/openwrt-package" >> "feeds.conf.default"
 #
 mkdir -p files/usr/share
 mkdir -p files/etc/
