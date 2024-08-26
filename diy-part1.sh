@@ -19,6 +19,8 @@ echo "src-git helloworld https://github.com/fw876/helloworld.git" >> "feeds.conf
 echo "src-git passwall https://github.com/xiaorouji/openwrt-passwall.git;main" >> "feeds.conf.default"
 # Add shidahuilang
 echo "src-git shidahuilang https://github.com/shidahuilang/openwrt-package" >> "feeds.conf.default"
+# Add 关机功能插件
+echo "src-git poweroffdevice https://github.com/sirpdboy/luci-app-poweroffdevice" >> "feeds.conf.default"
 #
 mkdir -p files/usr/share
 mkdir -p files/etc/
