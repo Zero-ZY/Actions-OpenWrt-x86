@@ -161,7 +161,7 @@ EOOF
 
 cat>files/usr/share/Check_Update.sh<<-\EOF
 #!/bin/bash
-# https://github.com/Lenyu2020/Actions-OpenWrt-x86
+# https://github.com/Zero-ZY/Actions-OpenWrt-x86
 # Actions-OpenWrt-x86 By Lenyu 20210505
 #path=$(dirname $(readlink -f $0))
 # cd ${path}
@@ -181,10 +181,10 @@ if [ -s  "/tmp/cloud_ts_version" ]; then
 	cloud_kernel=`cat /tmp/cloud_ts_version | cut -d _ -f 2`
 	#固件下载地址
 	new_version=`cat /tmp/cloud_ts_version`
-	DEV_URL=https://github.com/Lenyu2020/Actions-OpenWrt-x86/releases/download/${new_version}/openwrt_x86-64-${new_version}_dev_Lenyu.img.gz
-	DEV_UEFI_URL=https://github.com/Lenyu2020/Actions-OpenWrt-x86/releases/download/${new_version}/openwrt_x86-64-${new_version}_uefi-gpt_dev_Lenyu.img.gz
-	openwrt_dev=https://github.com/Lenyu2020/Actions-OpenWrt-x86/releases/download/${new_version}/openwrt_dev.md5
-	openwrt_dev_uefi=https://github.com/Lenyu2020/Actions-OpenWrt-x86/releases/download/${new_version}/openwrt_dev_uefi.md5
+	DEV_URL=https://github.com/Zero-ZY/Actions-OpenWrt-x86/releases/download/${new_version}/openwrt_x86-64-${new_version}_dev_Lenyu.img.gz
+	DEV_UEFI_URL=https://github.com/Zero-ZY/Actions-OpenWrt-x86/releases/download/${new_version}/openwrt_x86-64-${new_version}_uefi-gpt_dev_Lenyu.img.gz
+	openwrt_dev=https://github.com/Zero-ZY/Actions-OpenWrt-x86/releases/download/${new_version}/openwrt_dev.md5
+	openwrt_dev_uefi=https://github.com/Zero-ZY/Actions-OpenWrt-x86/releases/download/${new_version}/openwrt_dev_uefi.md5
 else
 	echo "请检测网络或重试！"
 	exit 1
@@ -307,7 +307,7 @@ EOF
 
 cat>files/usr/share/Lenyu-auto.sh<<-\EOF
 #!/bin/bash
-# https://github.com/Lenyu2020/Actions-OpenWrt-x86
+# https://github.com/Zero-ZY/Actions-OpenWrt-x86
 # Actions-OpenWrt-x86 By Lenyu 20210505
 #path=$(dirname $(readlink -f $0))
 # cd ${path}
@@ -334,10 +334,10 @@ if [ -s  "/tmp/cloud_ts_version" ]; then
 	cloud_kernel=`cat /tmp/cloud_ts_version | cut -d _ -f 2`
 	#固件下载地址
 	new_version=`cat /tmp/cloud_ts_version`
-	DEV_URL=https://github.com/Lenyu2020/Actions-OpenWrt-x86/releases/download/${new_version}/openwrt_x86-64-${new_version}_dev_Lenyu.img.gz
-	DEV_UEFI_URL=https://github.com/Lenyu2020/Actions-OpenWrt-x86/releases/download/${new_version}/openwrt_x86-64-${new_version}_uefi-gpt_dev_Lenyu.img.gz
-	openwrt_dev=https://github.com/Lenyu2020/Actions-OpenWrt-x86/releases/download/${new_version}/openwrt_dev.md5
-	openwrt_dev_uefi=https://github.com/Lenyu2020/Actions-OpenWrt-x86/releases/download/${new_version}/openwrt_dev_uefi.md5
+	DEV_URL=https://github.com/Zero-ZY/Actions-OpenWrt-x86/releases/download/${new_version}/openwrt_x86-64-${new_version}_dev_Lenyu.img.gz
+	DEV_UEFI_URL=https://github.com/Zero-ZY/Actions-OpenWrt-x86/releases/download/${new_version}/openwrt_x86-64-${new_version}_uefi-gpt_dev_Lenyu.img.gz
+	openwrt_dev=https://github.com/Zero-ZY/Actions-OpenWrt-x86/releases/download/${new_version}/openwrt_dev.md5
+	openwrt_dev_uefi=https://github.com/Zero-ZY/Actions-OpenWrt-x86/releases/download/${new_version}/openwrt_dev_uefi.md5
 else
 	echo "请检测网络或重试！"
 	exit 1
