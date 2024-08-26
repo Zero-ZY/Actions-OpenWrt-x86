@@ -20,7 +20,7 @@ echo "src-git passwall https://github.com/xiaorouji/openwrt-passwall.git;main" >
 # Add shidahuilang
 echo "src-git shidahuilang https://github.com/shidahuilang/openwrt-package" >> "feeds.conf.default"
 # Add 关机功能插件
-echo "src-git poweroffdevice https://github.com/sirpdboy/luci-app-poweroffdevice" >> "feeds.conf.default"
+#echo "src-git poweroffdevice https://github.com/sirpdboy/luci-app-poweroffdevice" >> "feeds.conf.default"
 #
 mkdir -p files/usr/share
 mkdir -p files/etc/
@@ -175,7 +175,7 @@ fi
 rm -f /tmp/cloud_version
 # 获取固件云端版本号、内核版本号信息
 current_version=`cat /etc/lenyu_version`
-wget -qO- -t1 -T2 "https://api.github.com/repos/Lenyu2020/Actions-OpenWrt-x86/releases/latest" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g;s/v//g'  > /tmp/cloud_ts_version
+wget -qO- -t1 -T2 "https://api.github.com/repos/Zero-ZY/Actions-OpenWrt-x86/releases" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g;s/v//g'  > /tmp/cloud_ts_version
 if [ -s  "/tmp/cloud_ts_version" ]; then
 	cloud_version=`cat /tmp/cloud_ts_version | cut -d _ -f 1`
 	cloud_kernel=`cat /tmp/cloud_ts_version | cut -d _ -f 2`
@@ -328,7 +328,7 @@ cp -f /usr/bin/xray /etc/xray_backup/xray_backup
 
 # 获取固件云端版本号、内核版本号信息
 current_version=`cat /etc/lenyu_version`
-wget -qO- -t1 -T2 "https://api.github.com/repos/Lenyu2020/Actions-OpenWrt-x86/releases/latest" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g;s/v//g'  > /tmp/cloud_ts_version
+wget -qO- -t1 -T2 "https://api.github.com/repos/Zero-ZY/Actions-OpenWrt-x86/releases" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g;s/v//g'  > /tmp/cloud_ts_version
 if [ -s  "/tmp/cloud_ts_version" ]; then
 	cloud_version=`cat /tmp/cloud_ts_version | cut -d _ -f 1`
 	cloud_kernel=`cat /tmp/cloud_ts_version | cut -d _ -f 2`
