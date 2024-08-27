@@ -55,6 +55,10 @@ rm -rf  bin/targets/x86/64/feeds.buildinfo
 rm -rf  bin/targets/x86/64/openwrt-x86-64-generic-kernel.bin
 rm -rf  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.vmdk
 rm -rf  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.vmdk
+rm -rf  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.vdi
+rm -rf  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.vdi
+rm -rf  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.vhdx
+rm -rf  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.vhdx
 rm -rf  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-rootfs.img.gz
 rm -rf  bin/targets/x86/64/openwrt-x86-64-generic.manifest
 rm -rf bin/targets/x86/64/sha256sums
@@ -80,11 +84,11 @@ elif [ "$str1" = "5.15" ];then
   mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.img.gz   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver515}_uefi-gpt_dev_Lenyu.img.gz
 elif [ "$str1" = "6.1" ];then
   if [ ! $ver66 ]; then
-  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}0_dev_Lenyu.img.gz
-  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.img.gz   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}0_uefi-gpt_dev_Lenyu.img.gz
+  mv  bin/targets/x86/64/.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}0_dev_Lenyu.img.gz
+  mv  bin/targets/x86/64/-efi.img.gz   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}0_uefi-gpt_dev_Lenyu.img.gz
  else
-  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}_dev_Lenyu.img.gz
-  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.img.gz   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}_uefi-gpt_dev_Lenyu.img.gz
+  mv  bin/targets/x86/64/.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}_dev_Lenyu.img.gz
+  mv  bin/targets/x86/64/-efi.img.gz   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}_uefi-gpt_dev_Lenyu.img.gz
    fi 
 elif [ "$str1" = "6.6" ];then
   if [ ! $ver66 ]; then
