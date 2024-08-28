@@ -125,6 +125,11 @@ jobs:
       run: |
         cd openwrt/package 
         git clone https://github.com/kuoruan/luci-app-frpc.git
+
+    - name: luci-app-netdata
+      run: |
+        cd openwrt/package 
+        git clone https://github.com/sirpdboy/luci-app-netdata.git       
         
     #- name: luci-app-adguardhome
       #run: |
