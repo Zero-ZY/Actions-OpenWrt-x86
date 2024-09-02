@@ -77,29 +77,75 @@ ver515=`grep "LINUX_VERSION-5.15 ="  include/kernel-5.15 | cut -d . -f 3`
 ver61=`grep "LINUX_VERSION-6.1 ="  include/kernel-6.1 | cut -d . -f 3`
 ver66=`grep "LINUX_VERSION-6.6 ="  include/kernel-6.6 | cut -d . -f 3`
 if [ "$str1" = "5.4" ];then
-   mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver54}_dev_Lenyu.img.gz
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver54}_dev_Lenyu.img.gz
   mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.img.gz   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver54}_uefi-gpt_dev_Lenyu.img.gz
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.vmdk       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver54}_dev_Lenyu.vmdk
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.vmdk   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver54}_uefi-gpt_dev_Lenyu.vmdk
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.vdi       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver54}_dev_Lenyu.vdi
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.vdi   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver54}_uefi-gpt_dev_Lenyu.vdi
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.vhdx       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver54}_dev_Lenyu.vhdx
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.vhdx   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver54}_uefi-gpt_dev_Lenyu.vhdx
+  
 elif [ "$str1" = "5.10" ];then
-   mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver510}_dev_Lenyu.img.gz
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver510}_dev_Lenyu.img.gz
   mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.img.gz   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver510}_uefi-gpt_dev_Lenyu.img.gz
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.vmdk       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver510}_dev_Lenyu.vmdk
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.vmdk   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver510}_uefi-gpt_dev_Lenyu.vmdk
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.vdi       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver510}_dev_Lenyu.vdi
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.vdi  bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver510}_uefi-gpt_dev_Lenyu.vdi
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.vhdx       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver510}_dev_Lenyu.vhdx
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.vhdx  bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver510}_uefi-gpt_dev_Lenyu.vhdx
+  
 elif [ "$str1" = "5.15" ];then
-   mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver515}_dev_Lenyu.img.gz
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver515}_dev_Lenyu.img.gz
   mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.img.gz   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver515}_uefi-gpt_dev_Lenyu.img.gz
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.vmdk       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver515}_dev_Lenyu.vmdk
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.vmdk   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver515}_uefi-gpt_dev_Lenyu.vmdk
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.vdi       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver515}_dev_Lenyu.vdi
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.vdi   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver515}_uefi-gpt_dev_Lenyu.vdi
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.vhdx       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver515}_dev_Lenyu.vhdx
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.vhdx   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver515}_uefi-gpt_dev_Lenyu.vhdx
+  
 elif [ "$str1" = "6.1" ];then
   if [ ! $ver66 ]; then
   mv  bin/targets/x86/64/.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}0_dev_Lenyu.img.gz
   mv  bin/targets/x86/64/-efi.img.gz   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}0_uefi-gpt_dev_Lenyu.img.gz
+  mv  bin/targets/x86/64/.vmdk       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}0_dev_Lenyu.vmdk
+  mv  bin/targets/x86/64/-efi.vmdk   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}0_uefi-gpt_dev_Lenyu.vmdk
+  mv  bin/targets/x86/64/.vdi       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}0_dev_Lenyu.vdi
+  mv  bin/targets/x86/64/-efi.vdi   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}0_uefi-gpt_dev_Lenyu.vdi
+  mv  bin/targets/x86/64/.vhdx       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}0_dev_Lenyu.vhdx
+  mv  bin/targets/x86/64/-efi.vhdx   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}0_uefi-gpt_dev_Lenyu.vhdx
+  
  else
   mv  bin/targets/x86/64/.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}_dev_Lenyu.img.gz
   mv  bin/targets/x86/64/-efi.img.gz   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}_uefi-gpt_dev_Lenyu.img.gz
+  mv  bin/targets/x86/64/.vmdk       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}_dev_Lenyu.vmdk
+  mv  bin/targets/x86/64/-efi.vmdk   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}_uefi-gpt_dev_Lenyu.vmdk
+  mv  bin/targets/x86/64/.vdi       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}_dev_Lenyu.vdi
+  mv  bin/targets/x86/64/-efi.vdi   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}_uefi-gpt_dev_Lenyu.vdi
+  mv  bin/targets/x86/64/.vhdx       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}_dev_Lenyu.vhdx
+  mv  bin/targets/x86/64/-efi.vhdx   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}_uefi-gpt_dev_Lenyu.vhdx
    fi 
 elif [ "$str1" = "6.6" ];then
   if [ ! $ver66 ]; then
   mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver66}0_dev_Lenyu.img.gz
   mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.img.gz   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver66}0_uefi-gpt_dev_Lenyu.img.gz
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.vmdk       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver66}0_dev_Lenyu.vmdk
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.vmdk   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver66}0_uefi-gpt_dev_Lenyu.ivmdk
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.vdi       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver66}0_dev_Lenyu.vdi
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.vdi   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver66}0_uefi-gpt_dev_Lenyu.vdi
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.vhdx       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver66}0_dev_Lenyu.vhdx
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.vhdx   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver66}0_uefi-gpt_dev_Lenyu.vhdx
  else
   mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver66}_dev_Lenyu.img.gz
   mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.img.gz   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver66}_uefi-gpt_dev_Lenyu.img.gz
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.vmdk       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver66}_dev_Lenyu.vmdk
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.vmdk   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver66}_uefi-gpt_dev_Lenyu.vmdk
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.vdi       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver66}_dev_Lenyu.vdi
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.vdi   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver66}_uefi-gpt_dev_Lenyu.vdi
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.vhdx       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver66}_dev_Lenyu.vhdx
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.vhdx   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver66}_uefi-gpt_dev_Lenyu.vhdx
    fi
 fi
 ls bin/targets/x86/64 | grep "gpt_dev_Lenyu.img" | cut -d - -f 3 | cut -d _ -f 1-2 > wget/op_version1
@@ -108,9 +154,21 @@ ls -l  "bin/targets/x86/64" | awk -F " " '{print $9}' > wget/open_dev_md5
 dev_version=`grep "_uefi-gpt_dev_Lenyu.img.gz" wget/open_dev_md5 | cut -d - -f 3 | cut -d _ -f 1-2`
 openwrt_dev=openwrt_x86-64-${dev_version}_dev_Lenyu.img.gz
 openwrt_dev_uefi=openwrt_x86-64-${dev_version}_uefi-gpt_dev_Lenyu.img.gz
+openwrt_dev_vmdk=openwrt_x86-64-${dev_version}_dev_Lenyu.vmdk
+openwrt_dev_uefi_vmdk=openwrt_x86-64-${dev_version}_uefi-gpt_dev_Lenyu.vmdk
+openwrt_dev_vdi=openwrt_x86-64-${dev_version}_dev_Lenyu.vdi
+openwrt_dev_uefi_vdi=openwrt_x86-64-${dev_version}_uefi-gpt_dev_Lenyu.vdi
+openwrt_dev_vhdx=openwrt_x86-64-${dev_version}_dev_Lenyu.vhdx
+openwrt_dev_uefi_vhdx=openwrt_x86-64-${dev_version}_uefi-gpt_dev_Lenyu.vhdx
 cd bin/targets/x86/64
 md5sum $openwrt_dev > openwrt_dev.md5
 md5sum $openwrt_dev_uefi > openwrt_dev_uefi.md5
+md5sum $openwrt_dev_vmdk > openwrt_dev_vmdk.md5
+md5sum $openwrt_dev_uefi_vmdk > openwrt_dev_uefi_vmdk.md5
+md5sum $openwrt_dev_vdi > openwrt_dev_vdi.md5
+md5sum $openwrt_dev_uefi_vdi > openwrt_dev_uefi_vdi.md5
+md5sum $openwrt_dev_vhdx > openwrt_dev_vhdx.md5
+md5sum $openwrt_dev_uefi_vhdx > openwrt_dev_uefi_vhdx.md5
 exit 0
 EOF
 
