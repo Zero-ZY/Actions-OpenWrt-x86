@@ -16,7 +16,9 @@
 #sed -i "s/.*PKG_VERSION:=.*/PKG_VERSION:=4.3.9_v1.2.14/" package/lean/qBittorrent-static/Makefile
 #sed -i "s/.*PKG_VERSION:=.*/PKG_VERSION:=5.0.0-stable/" package/libs/wolfssl/Makefile
 
-# TTYD 拒绝链接
+# TTYD 免登录
+# sed -i 's|/bin/login|/bin/login -f root|g' feeds/packages/utils/ttyd/files/ttyd.config
+# TTYD 拒绝链接问题
 sed -i 's|${interface:+-i $interface} \|#${interface:+-i $interface} \|g' feeds/packages/utils/ttyd/files/ttyd.init
 
 # 修改升级检测
