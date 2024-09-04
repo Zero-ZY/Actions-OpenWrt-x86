@@ -15,4 +15,8 @@
 #sed -i 's/KERNEL_PATCHVER:=5.15/KERNEL_PATCHVER:=6.1/g' target/linux/x86/Makefile
 #sed -i "s/.*PKG_VERSION:=.*/PKG_VERSION:=4.3.9_v1.2.14/" package/lean/qBittorrent-static/Makefile
 #sed -i "s/.*PKG_VERSION:=.*/PKG_VERSION:=5.0.0-stable/" package/libs/wolfssl/Makefile
+
+# TTYD 拒绝链接
+sed -i 's|${interface:+-i $interface} \|#${interface:+-i $interface} \|g' feeds/packages/utils/ttyd/files/ttyd.init
+
 # welcome test
