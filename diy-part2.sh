@@ -22,8 +22,8 @@
 sed -i 's|${interface:+-i $interface} \|#${interface:+-i $interface} \|g' feeds/packages/utils/ttyd/files/ttyd.init
 
 # 修改升级检测
-sed -i 's|/Lenyu2020/Actions-OpenWrt-x86|/Zero-ZY/Actions-OpenWrt-x86|g' files/usr/share/Check_Update.sh
-sed -i 's|/Lenyu2020/Actions-OpenWrt-x86|/Zero-ZY/Actions-OpenWrt-x86|g' files/usr/share/Lenyu-auto.sh
-sed -i 's|/Lenyu2020/Actions-OpenWrt-x86|/Zero-ZY/Actions-OpenWrt-x86|g' files/usr/share/Lenyu-version.sh
+#sed -i 's|/Lenyu2020/Actions-OpenWrt-x86|/Zero-ZY/Actions-OpenWrt-x86|g' files/usr/share/Check_Update.sh
+#sed -i 's|/Lenyu2020/Actions-OpenWrt-x86|/Zero-ZY/Actions-OpenWrt-x86|g' files/usr/share/Lenyu-auto.sh
+#sed -i 's|/Lenyu2020/Actions-OpenWrt-x86|/Zero-ZY/Actions-OpenWrt-x86|g' files/usr/share/Lenyu-version.sh
 
 # welcome test
