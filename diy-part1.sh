@@ -51,6 +51,14 @@ cat>> package/base-files/files/lib/upgrade/keep.d/base-files-essential<<-EOF
 /etc/openclash/core/
 EOF
 
+#easytier核心
+mkdir -p files/usr/bin
+wget -qO- -t1 -T2 "https://api.github.com/repos/EasyTier/EasyTier/releases" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g'  > files/usr/bin/easytier_version
+easytier_version=`cat files/usr/bin/easytier_version`
+wget -qO files/usr/bin/easytier.zip https://github.com/EasyTier/EasyTier/releases/download/${easytier_version}/easytier-linux-x86_64-${easytier_version}.zip
+unzip -j easytier.zip -d files/usr/bin
+rm -rf  files/usr/bin/easytier.zip
+rm -rf  files/usr/bin/easytier_version
 
 cat>rename.sh<<-\EOF
 #!/bin/bash
