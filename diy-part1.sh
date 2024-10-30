@@ -71,10 +71,6 @@ rm -rf  bin/targets/x86/64/feeds.buildinfo
 rm -rf  bin/targets/x86/64/openwrt-x86-64-generic-kernel.bin
 rm -rf  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.vmdk
 rm -rf  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.vmdk
-rm -rf  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.vdi
-rm -rf  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.vdi
-rm -rf  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.vhdx
-rm -rf  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.vhdx
 rm -rf  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-rootfs.img.gz
 rm -rf  bin/targets/x86/64/openwrt-x86-64-generic.manifest
 rm -rf bin/targets/x86/64/sha256sums
@@ -90,25 +86,21 @@ ver515=`grep "LINUX_VERSION-5.15 ="  include/kernel-5.15 | cut -d . -f 3`
 ver61=`grep "LINUX_VERSION-6.1 ="  include/kernel-6.1 | cut -d . -f 3`
 ver66=`grep "LINUX_VERSION-6.6 ="  include/kernel-6.6 | cut -d . -f 3`
 if [ "$str1" = "5.4" ];then
-  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver54}_dev_Lenyu.img.gz
+   mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver54}_dev_Lenyu.img.gz
   mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.img.gz   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver54}_uefi-gpt_dev_Lenyu.img.gz
-  
 elif [ "$str1" = "5.10" ];then
-  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver510}_dev_Lenyu.img.gz
+   mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver510}_dev_Lenyu.img.gz
   mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.img.gz   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver510}_uefi-gpt_dev_Lenyu.img.gz
-  
 elif [ "$str1" = "5.15" ];then
-  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver515}_dev_Lenyu.img.gz
+   mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver515}_dev_Lenyu.img.gz
   mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.img.gz   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver515}_uefi-gpt_dev_Lenyu.img.gz
-  
 elif [ "$str1" = "6.1" ];then
   if [ ! $ver66 ]; then
-  mv  bin/targets/x86/64/.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}0_dev_Lenyu.img.gz
-  mv  bin/targets/x86/64/-efi.img.gz   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}0_uefi-gpt_dev_Lenyu.img.gz
-  
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}0_dev_Lenyu.img.gz
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.img.gz   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}0_uefi-gpt_dev_Lenyu.img.gz
  else
-  mv  bin/targets/x86/64/.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}_dev_Lenyu.img.gz
-  mv  bin/targets/x86/64/-efi.img.gz   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}_uefi-gpt_dev_Lenyu.img.gz
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}_dev_Lenyu.img.gz
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.img.gz   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}_uefi-gpt_dev_Lenyu.img.gz
    fi 
 elif [ "$str1" = "6.6" ];then
   if [ ! $ver66 ]; then
@@ -210,7 +202,7 @@ fi
 rm -f /tmp/cloud_version
 # 获取固件云端版本号、内核版本号信息
 current_version=`cat /etc/lenyu_version`
-wget -qO- -t1 -T2 "https://api.github.com/repos/Zero-ZY/Actions-OpenWrt-x86/releases" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g;s/v//g'  > /tmp/cloud_ts_version
+wget -qO- -t1 -T2 "https://api.github.com/repos/Zero-ZY/Actions-OpenWrt-x86/releases/latest" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g;s/v//g'  > /tmp/cloud_ts_version
 if [ -s  "/tmp/cloud_ts_version" ]; then
 	cloud_version=`cat /tmp/cloud_ts_version | cut -d _ -f 1`
 fi
@@ -233,7 +225,7 @@ fi
 rm -f /tmp/cloud_version
 # 获取固件云端版本号、内核版本号信息
 current_version=`cat /etc/lenyu_version`
-wget -qO- -t1 -T2 "https://api.github.com/repos/Zero-ZY/Actions-OpenWrt-x86/releases" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g;s/v//g'  > /tmp/cloud_ts_version
+wget -qO- -t1 -T2 "https://api.github.com/repos/Zero-ZY/Actions-OpenWrt-x86/releases/latest" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g;s/v//g'  > /tmp/cloud_ts_version
 if [ -s  "/tmp/cloud_ts_version" ]; then
 	cloud_version=`cat /tmp/cloud_ts_version | cut -d _ -f 1`
 	cloud_kernel=`cat /tmp/cloud_ts_version | cut -d _ -f 2`
@@ -386,7 +378,7 @@ cp -f /usr/bin/xray /etc/xray_backup/xray_backup
 
 # 获取固件云端版本号、内核版本号信息
 current_version=`cat /etc/lenyu_version`
-wget -qO- -t1 -T2 "https://api.github.com/repos/Zero-ZY/Actions-OpenWrt-x86/releases" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g;s/v//g'  > /tmp/cloud_ts_version
+wget -qO- -t1 -T2 "https://api.github.com/repos/Zero-ZY/Actions-OpenWrt-x86/releases/latest" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g;s/v//g'  > /tmp/cloud_ts_version
 if [ -s  "/tmp/cloud_ts_version" ]; then
 	cloud_version=`cat /tmp/cloud_ts_version | cut -d _ -f 1`
 	cloud_kernel=`cat /tmp/cloud_ts_version | cut -d _ -f 2`
