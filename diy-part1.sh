@@ -32,7 +32,6 @@ touch wget/DISTRIB_REVISION1
 touch wget/DISTRIB_REVISION3
 touch files/usr/share/Check_Update.sh
 touch files/usr/share/Lenyu-auto.sh
-touch files/usr/share/Lenyu-version.sh
 touch files/usr/share/Lenyu-pw.sh
 
 # backup config
@@ -54,15 +53,6 @@ cat>>/etc/sysupgrade.conf<<-EOF
 /usr/share/v2ray/geoip.dat
 /usr/share/v2ray/geosite.dat
 EOF
-
-#easytier核心测试
-# mkdir -p files/usr/bin
-# wget -qO- -t1 -T2 "https://api.github.com/repos/EasyTier/EasyTier/releases" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g'  > files/usr/bin/easytier_version
-# easytier_version=`cat files/usr/bin/easytier_version`
-# wget -qO files/usr/bin/easytier.zip https://github.com/EasyTier/EasyTier/releases/download/${easytier_version}/easytier-linux-x86_64-${easytier_version}.zip
-# unzip -j easytier.zip -d files/usr/bin
-# rm -rf  files/usr/bin/easytier.zip
-# rm -rf  files/usr/bin/easytier_version
 
 cat>rename.sh<<-\EOF
 #!/bin/bash
@@ -185,29 +175,6 @@ if [ $? != 0 ]; then
 	EOF
 fi
 EOOF
-
-cat>files/usr/share/Lenyu-version.sh<<-\EOF
-#!/bin/bash
-# https://github.com/Zero-ZY/Actions-OpenWrt-x86
-# Actions-OpenWrt-x86 By Lenyu 20210505
-#path=$(dirname $(readlink -f $0))
-# cd ${path}
-#检测准备
-if [ ! -f  "/etc/lenyu_version" ]; then
-	echo
-	echo -e "\033[31m 该脚本在非Lenyu固件上运行，为避免不必要的麻烦，准备退出… \033[0m"
-	echo
-	exit 0
-fi
-rm -f /tmp/cloud_version
-# 获取固件云端版本号、内核版本号信息
-current_version=`cat /etc/lenyu_version`
-wget -qO- -t1 -T2 "https://api.github.com/repos/Zero-ZY/Actions-OpenWrt-x86/releases/latest" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g;s/v//g'  > /tmp/cloud_ts_version
-if [ -s  "/tmp/cloud_ts_version" ]; then
-	cloud_version=`cat /tmp/cloud_ts_version | cut -d _ -f 1`
-fi
-exit 0
-EOF
 
 cat>files/usr/share/Check_Update.sh<<-\EOF
 #!/bin/bash
