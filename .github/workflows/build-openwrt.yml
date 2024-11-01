@@ -29,7 +29,7 @@ env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
-  CONFIG_FILE: .diffconfig_test
+  CONFIG_FILE: .diffconfig
   DIY_P1_SH: diy-part1.sh
   DIY_P2_SH: diy-part2.sh
   UPLOAD_BIN_DIR: false
@@ -91,7 +91,7 @@ jobs:
       with:
        ccache: 'true' #'true' 默认值
        #清空缓存
-       clean:  'true'  # 'false' 默认值
+       clean:  'false'  # 'false' 默认值
        prefix: ${{ github.workspace }}/openwrt
     
     - name: luci-app-openclash install
