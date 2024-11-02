@@ -150,7 +150,12 @@ jobs:
     - name: luci-app-ddns-go
       run: |
         cd openwrt/package 
-         git clone https://github.com/sirpdboy/luci-app-ddns-go.git        
+         git clone https://github.com/sirpdboy/luci-app-ddns-go.git
+
+    - name: luci-app-bandwidthd
+      run: |
+        cd openwrt/package 
+         git clone https://github.com/AlexZhuo/luci-app-bandwidthd.git
         
     #- name: luci-app-adguardhome
       #run: |
