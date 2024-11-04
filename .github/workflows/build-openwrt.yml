@@ -165,7 +165,7 @@ jobs:
     - name: luci-app-wrtbwmon
       run: |
         cd openwrt/package 
-         git clone https://github.com/brvphoenix/luci-app-wrtbwmon.git
+        git clone -b release-1.6.3 https://github.com/brvphoenix/luci-app-wrtbwmon.git
         
     #- name: luci-app-adguardhome
       #run: |
