@@ -156,6 +156,11 @@ jobs:
         cd openwrt/package 
          git clone https://github.com/AlexZhuo/luci-app-bandwidthd.git
 
+    - name: luci-app-taskplan
+      run: |
+        cd openwrt/package 
+         git clone https://github.com/sirpdboy/luci-app-taskplan.git
+
    # - name: wrtbwmon
    #   run: |
    #     cd openwrt/package 
