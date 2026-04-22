@@ -120,7 +120,7 @@ jobs:
     - name: luci-theme-design
       run: |
         cd openwrt/package 		
-        git clone https://github.com/kenzok78/luci-theme-design.git
+        git clone https://github.com/gngpp/luci-theme-design.git
 
     - name: luci-theme-neobird
       run: |
