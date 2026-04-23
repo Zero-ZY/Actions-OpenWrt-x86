@@ -200,7 +200,7 @@ jobs:
     - name: lenyu
       run: |
         cd openwrt 
-        bash ../main-repo/lenyu.sh
+        bash  lenyu.sh
 
 
     - name: Update feeds
@@ -228,29 +228,7 @@ jobs:
       id: package
       run: |
         cd openwrt
-        echo -e 'CONFIG_DEVEL=y\nCONFIG_CCACHE=y' >> .config
-        
-        # 1. 防 Rust 404 代码保留
-        if [ -f feeds/packages/lang/rust/Makefile ]; then
-          sed -i '/download-ci-llvm/ s/true/false/g' feeds/packages/lang/rust/Makefile
-        fi
-        
-        # 2. ☢️ 物理剔除 ksmbd 及其所有的捆绑小弟
-        rm -rf package/kernel/ksmbd
-        rm -rf feeds/packages/net/ksmbd-tools
-        # 使用 find 命令全目录地毯式搜索并删除 autosamba 和 luci-app-ksmbd，防止 Lean 调整目录
-        find feeds package -name "luci-app-ksmbd" -type d -exec rm -rf {} +
-        find feeds package -name "autosamba" -type d -exec rm -rf {} +
-        
-        # 3. 清理 .config 中的遗留残留，并强制启用稳定的 samba4
-        sed -i 's/CONFIG_PACKAGE_luci-app-ksmbd=y/# CONFIG_PACKAGE_luci-app-ksmbd is not set/g' .config
-        sed -i 's/CONFIG_PACKAGE_ksmbd-server=y/# CONFIG_PACKAGE_ksmbd-server is not set/g' .config
-        sed -i 's/CONFIG_PACKAGE_autosamba=y/# CONFIG_PACKAGE_autosamba is not set/g' .config
-        
-        echo "CONFIG_PACKAGE_luci-app-samba4=y" >> .config
-        echo "CONFIG_PACKAGE_samba4-libs=y" >> .config
-        echo "CONFIG_PACKAGE_samba4-server=y" >> .config
-        
+        echo -e 'CONFIG_DEVEL=y\nCONFIG_CCACHE=y' >> .config #Cache.Speedup
         make defconfig
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
@@ -267,21 +245,21 @@ jobs:
         [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
         echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
 
-    - name: Check space usage (Post-compile)
+    - name: Check space usage
       if: (!cancelled())
       run: df -hT
 
     - name: Upload bin directory
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@main
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
       with:
         name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: openwrt/bin
    
-    - name: Run rename.sh
-      working-directory: openwrt
+    - name: delete files
       run: |
-        bash ../main-repo/rename.sh
+        cd openwrt 
+        bash  rename.sh
     
 
     - name: Organize files
@@ -294,31 +272,48 @@ jobs:
         echo "status=success" >> $GITHUB_OUTPUT
 
     - name: Upload firmware directory
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@main
       if: steps.organize.outputs.status == 'success' && !cancelled()
       with:
         name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: ${{ env.FIRMWARE }}
 
+    - name: Upload firmware to cowtransfer
+      id: cowtransfer
+      if: steps.organize.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
+      run: |
+        curl -fsSL git.io/file-transfer | sh
+        ./transfer cow --block 2621440 -s -p 64 --no-progress ${FIRMWARE} 2>&1 | tee cowtransfer.log
+        echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
+        echo "url=$(cat cowtransfer.log | grep https | cut -f3 -d" ")" >> $GITHUB_OUTPUT
+
+    - name: Upload firmware to WeTransfer
+      id: wetransfer
+      if: steps.organize.outputs.status == 'success' && env.UPLOAD_WETRANSFER == 'true' && !cancelled()
+      run: |
+        curl -fsSL git.io/file-transfer | sh
+        ./transfer wet -s -p 16 --no-progress ${FIRMWARE} 2>&1 | tee wetransfer.log
+        echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
+        echo "url=$(cat wetransfer.log | grep https | cut -f3 -d" ")" >> $GITHUB_OUTPUT
+
     - name: Generate release tag
-      working-directory: openwrt
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
-        touch release.txt
-        [ -f wget/op_version1 ] && echo "release_tag=$(cat wget/op_version1)" >> $GITHUB_OUTPUT || echo "release_tag=OpenWrt_${{ env.FILE_DATE }}" >> $GITHUB_OUTPUT
-        git log --pretty=format:"%s(#By %an)" --graph --since=3.hour >> release.txt
-        
-        git -C feeds/packages log --pretty=format:"%s(#By %an)" --graph --since=3.hour >> release.txt || true
-        git -C feeds/luci log --pretty=format:"%s(#By %an)" --graph --since=3.hour >> release.txt || true
-        git -C feeds/routing log --pretty=format:"%s(#By %an)" --graph --since=3.hour >> release.txt || true
-        git -C feeds/telephony log --pretty=format:"%s(#By %an)" --graph --since=3.hour >> release.txt || true
-        git -C feeds/helloworld log --pretty=format:"%s(#By %an)" --graph --since=4.hour >> release.txt || true
-        git -C feeds/passwall log --pretty=format:"%s(#By %an)" --graph --since=8.hour >> release.txt || true
-        git -C package/luci-app-openclash log --pretty=format:"%s(#By %an)" --graph --since=8.hour >> release.txt || true
-        
-        test ! -s release.txt && echo -e "\n* The source code is not updated." >> release.txt
+        echo "release_tag=$(cat openwrt/wget/op_version1)" >> $GITHUB_OUTPUT
+        git -C openwrt log --pretty=format:"%s(#By %an)"  --graph --since=3.hour >> release.txt
+        git -C openwrt/feeds/packages log --pretty=format:"%s(#By %an)"  --graph --since=3.hour >> release.txt
+        git -C openwrt/feeds/luci log --pretty=format:"%s(#By %an)"  --graph --since=3.hour >> release.txt
+        git -C openwrt/feeds/routing log --pretty=format:"%s(#By %an)"  --graph --since=3.hour >> release.txt
+        git -C openwrt/feeds/telephony log --pretty=format:"%s(#By %an)"  --graph --since=3.hour >> release.txt
+        git -C openwrt/feeds/helloworld log --pretty=format:"%s(#By %an)"  --graph --since=4.hour >> release.txt
+        git -C openwrt/feeds/passwall log --pretty=format:"%s(#By %an)"  --graph --since=8.hour >> release.txt
+        git -C openwrt/package/luci-app-openclash log --pretty=format:"%s(#By %an)"  --graph --since=8.hour >> release.txt
+        test  ! -s release.txt && echo -e "\n* The source code is not updated." >> release.txt
         sed -i '1i ## Firmware Update Log' release.txt
+        touch release.txt
+        [ $UPLOAD_COWTRANSFER = true ] && echo "🔗 [Cowtransfer](${{ steps.cowtransfer.outputs.url }})" >> release.txt
+        [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
         echo "status=success" >> $GITHUB_OUTPUT
 
     - name: Upload firmware to release
