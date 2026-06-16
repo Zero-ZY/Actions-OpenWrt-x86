@@ -34,6 +34,15 @@ sed -i 's|/Lenyu2020/Actions-OpenWrt-x86|/Zero-ZY/Actions-OpenWrt-x86|g' files/u
 # sed -i 's|/Lenyu2020/Actions-OpenWrt-x86|/Zero-ZY/Actions-OpenWrt-x86|g' files/usr/share/Lenyu-version.sh
 sed -i 's|/Lenyu2020/Actions-OpenWrt-x86|/Zero-ZY/Actions-OpenWrt-x86|g' files/usr/share/Lenyu-pw.sh
 
+#修改luci-app-wolplus菜单显示名称
+# 1. 强制修改 Lua 控制器文件中的默认菜单名称（兜底英文显示）
+find package/ feeds/ -type f -name "wolplus.lua" 2>/dev/null | xargs -r sed -i 's/_("WoL Plus")/_("网络唤醒plus")/g'
+find package/ feeds/ -type f -name "wolplus.lua" 2>/dev/null | xargs -r sed -i 's/"WoL Plus"/"网络唤醒plus"/g'
+# 2. 强制修改中文语言包（汉化包），将原本的“网络唤醒++”或“WoL Plus”全部改为“网络唤醒plus”
+find package/ feeds/ -type f -name "wolplus.po" 2>/dev/null | xargs -r sed -i 's/msgstr "网络唤醒++"/msgstr "网络唤醒plus"/g'
+find package/ feeds/ -type f -name "wolplus.po" 2>/dev/null | xargs -r sed -i 's/msgstr "WoL 网络唤醒加增强版"/msgstr "网络唤醒plus"/g'
+find package/ feeds/ -type f -name "wolplus.po" 2>/dev/null | xargs -r sed -i 's/msgstr "WoL Plus"/msgstr "网络唤醒plus"/g'
+
 # welcome test
 
 # ====================================================================================
