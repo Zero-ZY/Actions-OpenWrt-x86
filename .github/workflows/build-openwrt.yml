@@ -45,7 +45,12 @@ jobs:
     #runs-on: ubuntu-latest
     #runs-on: ubuntu-22.04
     runs-on: ubuntu-24.04
-    
+
+    # 必须增加以下三行内容授权
+    permissions:
+      contents: write
+      releases: write
+      
     steps:
 
     - name: Maximize Build Space
@@ -364,11 +369,21 @@ jobs:
         retain_days: 1
         keep_minimum_runs: 5
 
-    - name: Remove old Releases
-      uses: dev-drprasad/delete-older-releases@master
-      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
-      with:
-        keep_latest: 10
-        delete_tags: true
+#    - name: Remove old Releases
+#      uses: dev-drprasad/delete-older-releases@master
+#      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+#      with:
+#        keep_latest: 10
+#        delete_tags: true
+
+    - name: Delete older releases (Native GitHub CLI)
+      run: |
+        # 获取所有 Release 标签，排除前 10 个最新的，将其余旧标签循环删除
+        gh release list --limit 100 | awk 'NR>10 {print $1}' | while read -r tag; do
+          echo "正在删除旧固件发布及标签: $tag"
+          gh release delete "$tag" --yes --cleanup-tag
+        done
+        
       env:
         GITHUB_TOKEN: ${{ secrets.ACTIONS_TRIGGER_PAT }}
+
