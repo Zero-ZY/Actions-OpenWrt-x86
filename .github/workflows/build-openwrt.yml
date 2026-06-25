@@ -46,11 +46,6 @@ jobs:
     #runs-on: ubuntu-22.04
     runs-on: ubuntu-24.04
 
-    # 必须增加以下三行内容授权
-    permissions:
-      contents: write
-      releases: write
-      
     steps:
 
     - name: Maximize Build Space
