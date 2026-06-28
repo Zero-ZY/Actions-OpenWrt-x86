@@ -123,7 +123,7 @@ jobs:
         git clone https://github.com/sirpdboy/luci-app-taskplan.git
         
         #luci-app-oaf
-        git clone https://github.com/destan19/OpenAppFilter.git
+        git clone https://github.com/destan19/OpenAppFilter.git package/OpenAppFilter  
         
         popd
 
