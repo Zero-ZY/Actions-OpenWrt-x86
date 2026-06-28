@@ -34,14 +34,39 @@ sed -i 's|/Lenyu2020/Actions-OpenWrt-x86|/Zero-ZY/Actions-OpenWrt-x86|g' files/u
 sed -i 's|/Lenyu2020/Actions-OpenWrt-x86|/Zero-ZY/Actions-OpenWrt-x86|g' files/usr/share/Lenyu-version.sh
 sed -i 's|/Lenyu2020/Actions-OpenWrt-x86|/Zero-ZY/Actions-OpenWrt-x86|g' files/usr/share/Lenyu-pw.sh
 
+# --------------------------------------------------------------------------------
+# OpenAppFilter无中文修改
+# 强制重写 OpenAppFilter 的 Makefile
+cat << 'EOF' > package/OpenAppFilter/luci-app-oaf/Makefile
+include $(TOPDIR)/rules.mk
+
+LUCI_TITLE:=LuCI support for OpenAppFilter
+LUCI_DEPENDS:=+appfilter
+LUCI_PKGARCH:=all
+
+include $(TOPDIR)/feeds/luci/luci.mk
+
+# call BuildPackage - OpenWrt buildroot signature
+EOF
+
+# 如果存在旧版中文目录，做软链接确保新版 LuCI (zh_Hans) 能够完美识别
+if [ -d "package/OpenAppFilter/luci-app-oaf/po/zh-cn" ]; then
+    ln -sf zh-cn package/OpenAppFilter/luci-app-oaf/po/zh_Hans
+fi
+# --------------------------------------------------------------------------------
+
 #修改luci-app-wolplus菜单显示名称
-# 1. 强制修改 Lua 控制器文件中的默认菜单名称（兜底英文显示）
+# 1. 强制修改新版 LuCI 的 JSON 菜单定义文件（核心：新版 Lean 源码生效点）
+find package/ feeds/ -type f -name "*wolplus*.json" 2>/dev/null | xargs -r sed -i 's/"title": *"[^"]*"/"title": "网络唤醒plus"/g'
+# 2. 兼容旧版 LuCI 的 Lua 控制器文件（双重保险）
 find package/ feeds/ -type f -name "wolplus.lua" 2>/dev/null | xargs -r sed -i 's/_("WoL Plus")/_("网络唤醒plus")/g'
 find package/ feeds/ -type f -name "wolplus.lua" 2>/dev/null | xargs -r sed -i 's/"WoL Plus"/"网络唤醒plus"/g'
-# 2. 强制修改中文语言包（汉化包），将原本的“网络唤醒++”或“WoL Plus”全部改为“网络唤醒plus”
-find package/ feeds/ -type f -name "wolplus.po" 2>/dev/null | xargs -r sed -i 's/msgstr "网络唤醒++"/msgstr "网络唤醒plus"/g'
-find package/ feeds/ -type f -name "wolplus.po" 2>/dev/null | xargs -r sed -i 's/msgstr "WoL 网络唤醒加增强版"/msgstr "网络唤醒plus"/g'
-find package/ feeds/ -type f -name "wolplus.po" 2>/dev/null | xargs -r sed -i 's/msgstr "WoL Plus"/msgstr "网络唤醒plus"/g'
+find package/ feeds/ -type f -name "wolplus.lua" 2>/dev/null | xargs -r sed -i 's/title = .*/title = "网络唤醒plus",/g'
+# 3. 强行重写中文语言包 (.po 文件) 中的翻译映射
+# 无论原来的翻译是 "网络唤醒++"、"WoL 网络唤醒加增强版" 还是 "WoL Plus"，一律精准定位并替换
+find package/ feeds/ -type f -name "*wolplus*.po" 2>/dev/null | xargs -r sed -i '/msgid "WoL Plus"/,/^$/s/msgstr ".*/msgstr "网络唤醒plus"/'
+find package/ feeds/ -type f -name "*wolplus*.po" 2>/dev/null | xargs -r sed -i 's/msgstr "网络唤醒++"/msgstr "网络唤醒plus"/g'
+find package/ feeds/ -type f -name "*wolplus*.po" 2>/dev/null | xargs -r sed -i 's/msgstr "WoL 网络唤醒加增强版"/msgstr "网络唤醒plus"/g'
 
 # welcome test
 
