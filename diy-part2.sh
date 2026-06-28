@@ -35,24 +35,57 @@ sed -i 's|/Lenyu2020/Actions-OpenWrt-x86|/Zero-ZY/Actions-OpenWrt-x86|g' files/u
 sed -i 's|/Lenyu2020/Actions-OpenWrt-x86|/Zero-ZY/Actions-OpenWrt-x86|g' files/usr/share/Lenyu-pw.sh
 
 # --------------------------------------------------------------------------------
-# OpenAppFilter无中文修改
-# 强制重写 OpenAppFilter 的 Makefile
-cat << 'EOF' > package/OpenAppFilter/luci-app-oaf/Makefile
-include $(TOPDIR)/rules.mk
+# ==============================================================================
+# OpenAppFilter 菜单名称与前端全界面汉化终极批处理 (基于新版 LuCI JSON 架构排错经验)
+# ==============================================================================
+# 【第一步：创建双重路径依赖，激发起语言包编译链】
+# if [ -f "package/OpenAppFilter/luci-app-oaf/Makefile" ]; then
+#     sed -i '/LUCI_DEPENDS:=/c\LUCI_DEPENDS:=+kmod-oaf +appfilter +luci-i18n-oaf-zh-cn' package/OpenAppFilter/luci-app-oaf/Makefile
+# fi
 
-LUCI_TITLE:=LuCI support for OpenAppFilter
-LUCI_DEPENDS:=+appfilter
-LUCI_PKGARCH:=all
+# 强行创建新旧版本语言包目录，确保 zh_Hans 和 zh-cn 都能命中
+mkdir -p package/OpenAppFilter/luci-app-oaf/po/zh_Hans
+mkdir -p package/OpenAppFilter/luci-app-oaf/po/zh-cn
 
-include $(TOPDIR)/feeds/luci/luci.mk
+# 实时拉取最新官方 oaf.po 字典
+PO_URL="https://githubusercontent.com"
+curl -sL "$PO_URL" -o package/OpenAppFilter/luci-app-oaf/po/zh_Hans/oaf.po
+cp -f package/OpenAppFilter/luci-app-oaf/po/zh_Hans/oaf.po package/OpenAppFilter/luci-app-oaf/po/zh-cn/oaf.po
 
-# call BuildPackage - OpenWrt buildroot signature
-EOF
+# 【第二步：菜单栏强力汉化 - 汲取 wolplus 失效教训，重点攻克新版 JSON 菜单栏】
+# 扩大搜索范围至 package/ 和 feeds/ 目录，使用模糊匹配捕捉所有可能名为 oaf 或 appfilter 的 JSON 菜单资源
+echo "正在强制改写 OpenAppFilter 的 JSON 菜单显示名称..."
+find package/ feeds/ -type f \( -name "*oaf*.json" -o -name "*appfilter*.json" \) 2>/dev/null | xargs -r sed -i -E 's/"title": *"[^"]*"/"title": "应用过滤"/g'
 
-# 如果存在旧版中文目录，做软链接确保新版 LuCI (zh_Hans) 能够完美识别
-if [ -d "package/OpenAppFilter/luci-app-oaf/po/zh-cn" ]; then
-    ln -sf zh-cn package/OpenAppFilter/luci-app-oaf/po/zh_Hans
+# 【第三步：对传统 Lua 控制器做兜底修改 (双重保险)】
+find package/ feeds/ -type f \( -name "*oaf*.lua" -o -name "*appfilter*.lua" \) 2>/dev/null | xargs -r sed -i 's/_("OpenAppFilter")/_("应用过滤")/g'
+find package/ feeds/ -type f \( -name "*oaf*.lua" -o -name "*appfilter*.lua" \) 2>/dev/null | xargs -r sed -i 's/"OpenAppFilter"/"应用过滤"/g'
+find package/ feeds/ -type f \( -name "*oaf*.lua" -o -name "*appfilter*.lua" \) 2>/dev/null | xargs -r sed -i 's/_("App Filter")/_("应用过滤")/g'
+find package/ feeds/ -type f \( -name "*oaf*.lua" -o -name "*appfilter*.lua" \) 2>/dev/null | xargs -r sed -i 's/"App Filter"/"应用过滤"/g'
+
+# 【第四步：根据拉取的 po 字典进行大范围“硬汉化”替换，摧毁新版前端 JS 异步渲染回英文的漏洞】
+OAF_TARGET_DIR="package/OpenAppFilter/luci-app-oaf"
+if [ -d "$OAF_TARGET_DIR" ]; then
+    echo "根据官方 po 字典执行全系统底层资源硬替换..."
+    awk '/msgid "/ {id=$0; sub(/^msgid "/, "", id); sub(/"$/, "", id)} 
+         /msgstr "/ {str=$0; sub(/^msgstr "/, "", str); sub(/"$/, "", str); 
+         if(id != "" && str != "") print id "|||" str}' "$OAF_TARGET_DIR/po/zh_Hans/oaf.po" | while IFS="|||" read -r msgid msgstr; do
+        
+        # 排除过短、容易引发误伤的文件后缀名或变量标识符
+        if [ ${#msgid} -gt 2 ] && [[ "$msgid" != *.* ]]; then
+            # 精准转义，防止干扰正则引擎
+            safe_id=$(echo "$msgid" | sed 's/[.[\*^$()+?{|]/\\&/g')
+            safe_str=$(echo "$msgstr" | sed 's/[&/]/\\&/g')
+            
+            # 暴力遍历替换该插件下所有的静态 htm、纯前端 js、以及异步加载所依赖的 json / lua 数据源
+            find "$OAF_TARGET_DIR" -type f \( -name "*.htm" -o -name "*.js" -o -name "*.json" -o -name "*.lua" \) 2>/dev/null | xargs -r sed -i "s/\"$safe_id\"/\"$safe_str\"/g" 2>/dev/null
+            find "$OAF_TARGET_DIR" -type f \( -name "*.htm" -o -name "*.js" -o -name "*.json" -o -name "*.lua" \) 2>/dev/null | xargs -r sed -i "s/>$safe_id</>$safe_str</g" 2>/dev/null
+        fi
+    done
 fi
+
+# 【第五步：清洗编译缓存，迫使 Actions 完全基于汉化后的新源码重构】
+rm -rf build_dir/target-*/luci-app-oaf*
 # --------------------------------------------------------------------------------
 
 #修改luci-app-wolplus菜单显示名称
