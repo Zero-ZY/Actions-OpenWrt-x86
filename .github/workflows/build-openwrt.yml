@@ -102,7 +102,7 @@ jobs:
         git clone https://github.com/kuoruan/luci-app-frpc.git
         
         #luci-theme-design
-        git clone https://github.com/gngpp/luci-theme-design.git
+        #git clone https://github.com/gngpp/luci-theme-design.git
         
         #luci-theme-neobird
         git clone https://github.com/thinktip/luci-theme-neobird.git
